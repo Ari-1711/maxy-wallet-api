@@ -157,5 +157,3 @@ Representasi struktur *Layered Architecture* yang kami terapkan:
 2. [ ] **Multi-Currency E-Wallet Engine:** Merestrukturisasi *schema* untuk menampung saldo dompet dalam berbagai *currency* (USD, IDR, dll.) dengan integrasi kalkulasi *exchange rate* dinamis.
 3. [ ] **Integrasi Webhook Payment Gateway:** Mengotomasi *Top-Up* melalui *webhook event listener* dari layanan perbankan/Payment Gateway pihak ketiga (Midtrans/Xendit/Stripe) demi validasi arus kas instan.
 
----
-*Developed and maintained by Ari Hermawan.*
