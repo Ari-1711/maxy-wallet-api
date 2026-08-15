@@ -116,4 +116,16 @@ describe('Maxy Wallet Flow', () => {
     expect(res.body.result).toHaveProperty('created_date');
     expect(res.body.result.balance_after).toBe(70000);
   });
+
+  it('7. Get Transactions for User 1', async () => {
+    const res = await request(app)
+      .get('/transactions')
+      .set('Authorization', `Bearer ${accessToken1}`);
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.status).toEqual('SUCCESS');
+    expect(Array.isArray(res.body.result)).toBe(true);
+    // User 1 has done 3 transactions: Topup, Pay, and Transfer
+    expect(res.body.result.length).toBe(3);
+  });
 });
