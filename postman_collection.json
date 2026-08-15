@@ -272,6 +272,48 @@
       }
     },
     {
+      "name": "Transfer Failed (Balance not enough)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"target_user_id\": \"{{target_user_id}}\",\n  \"amount\": 999999999,\n  \"remarks\": \"Bayar utang\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/transfer",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["transfer"]
+        }
+      }
+    },
+    {
+      "name": "Transfer Failed (Unauthenticated)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer invalid_or_missing_token" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"target_user_id\": \"{{target_user_id}}\",\n  \"amount\": 5000,\n  \"remarks\": \"Bayar utang\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/transfer",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["transfer"]
+        }
+      }
+    },
+    {
       "name": "Get Transactions",
       "request": {
         "method": "GET",
