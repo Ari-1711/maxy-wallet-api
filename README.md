@@ -6,6 +6,7 @@
 ![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
 ![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
@@ -119,7 +120,12 @@ Pada iterasi ini, tantangan terbesar adalah menjaga agar arsitektur tetap rampin
    npm run dev    # Menjalankan development server
    npm test       # Menjalankan suite pengujian end-to-end Jest
    ```
-6. **Testing Interaktif via Postman:**
+6. **Deployment via Docker (Opsional tapi Direkomendasikan):**
+   Jika Anda sudah menginstal Docker, Anda bisa langsung menjalankan seluruh arsitektur (Database PostgreSQL + Node.js API) secara instan tanpa perlu repot mengatur database lokal:
+   ```bash
+   docker-compose up --build -d
+   ```
+7. **Testing Interaktif via Postman:**
    Import file `postman_collection.json` yang tersedia di direktori proyek ini ke dalam aplikasi Postman Anda. Koleksi ini sudah dikonfigurasi untuk otomatis menangkap token otentikasi sehingga mempermudah Anda bereksperimen.
 
 ## <a id="section-10"></a>📂 10. Struktur Direktori Proyek

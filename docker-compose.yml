@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: maxy_wallet_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: maxy_wallet
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: maxy_wallet_api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/maxy_wallet?schema=public
+      - PORT=3000
+      - JWT_SECRET=secret_maxy_wallet
+      - JWT_REFRESH_SECRET=refresh_secret_maxy_wallet
+    depends_on:
+      - db
+    # We use a command to ensure Prisma migrations are run before starting the app
+    command: sh -c "npx prisma migrate deploy && npm start"
+
+volumes:
+  postgres_data:
