@@ -6,6 +6,7 @@
 ![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
 ![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
 > **Elevator Pitch:** RESTful Financial API berbasis Node.js yang memastikan keamanan finansial dan integritas transaksi (ACID 100%) dengan pemrosesan mutasi saldo secara atomik guna mencegah *double-spending* dan *race condition*.
@@ -118,6 +119,8 @@ Pada iterasi ini, tantangan terbesar adalah menjaga agar arsitektur tetap rampin
    npm run dev    # Menjalankan development server
    npm test       # Menjalankan suite pengujian end-to-end Jest
    ```
+6. **Testing Interaktif via Postman:**
+   Import file `postman_collection.json` yang tersedia di direktori proyek ini ke dalam aplikasi Postman Anda. Koleksi ini sudah dikonfigurasi untuk otomatis menangkap token otentikasi sehingga mempermudah Anda bereksperimen.
 
 ## <a id="section-10"></a>📂 10. Struktur Direktori Proyek
 
