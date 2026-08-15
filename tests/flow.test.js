@@ -128,4 +128,22 @@ describe('Maxy Wallet Flow', () => {
     // User 1 has done 3 transactions: Topup, Pay, and Transfer
     expect(res.body.result.length).toBe(3);
   });
+
+  it('8. Update Profile User 1', async () => {
+    const res = await request(app)
+      .put('/profile')
+      .set('Authorization', `Bearer ${accessToken1}`)
+      .send({
+        first_name: 'John',
+        last_name: 'Updated',
+        address: 'Updated Address'
+      });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.status).toEqual('SUCCESS');
+    expect(res.body.result.first_name).toBe('John');
+    expect(res.body.result.last_name).toBe('Updated');
+    expect(res.body.result.address).toBe('Updated Address');
+    expect(res.body.result).toHaveProperty('updated_date');
+  });
 });
