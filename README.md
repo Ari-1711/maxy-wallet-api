@@ -158,4 +158,4 @@ Representasi struktur *Layered Architecture* yang kami terapkan:
 3. [ ] **Integrasi Webhook Payment Gateway:** Mengotomasi *Top-Up* melalui *webhook event listener* dari layanan perbankan/Payment Gateway pihak ketiga (Midtrans/Xendit/Stripe) demi validasi arus kas instan.
 
 ---
-*Dibuat dengan dedikasi tinggi oleh tim Maxy Wallet Engineering.*
+*Developed and maintained by Ari Hermawan.*
