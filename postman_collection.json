@@ -53,7 +53,7 @@
             "exec": [
               "var jsonData = pm.response.json();",
               "if (jsonData.status === 'SUCCESS') {",
-              "    pm.environment.set('access_token', jsonData.result.access_token);",
+              "    pm.collectionVariables.set('access_token', jsonData.result.access_token);",
               "}"
             ],
             "type": "text/javascript"
@@ -184,6 +184,20 @@
     },
     {
       "name": "Register Target User for Transfer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.status === 'SUCCESS') {",
+              "    pm.collectionVariables.set('target_user_id', jsonData.result.user_id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [
@@ -211,7 +225,7 @@
             "exec": [
               "var jsonData = pm.response.json();",
               "if (jsonData.status === 'SUCCESS') {",
-              "    pm.environment.set('target_access_token', jsonData.result.access_token);",
+              "    pm.collectionVariables.set('target_access_token', jsonData.result.access_token);",
               "}"
             ],
             "type": "text/javascript"
