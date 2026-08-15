@@ -1,4 +1,4 @@
-# 🛡️ Maxy Wallet API (E-Wallet Secure Ledger Engine)
+# <a id="section-1"></a>🛡️ Maxy Wallet API (E-Wallet Secure Ledger Engine)
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
@@ -17,19 +17,19 @@
 > Pastikan untuk tidak pernah melakukan *commit* pada file `.env` ke *version control*. Gunakan rahasia yang kuat untuk `JWT_SECRET` dan string koneksi `DATABASE_URL` di lingkungan produksi.
 
 ## 📑 2. Daftar Isi
-- [1. Hero Header & Quick Access](#1-hero-header--quick-access)
-- [3. Ringkasan Eksekutif & Metrik Kinerja](#3-ringkasan-eksekutif--metrik-kinerja)
-- [4. Spesifikasi Database & Relasi Entitas](#4-spesifikasi-database--relasi-entitas)
-- [5. Arsitektur & Alur Kerja Sistem](#5-arsitektur--alur-kerja-sistem)
-- [6. Pertimbangan Teknik (Engineering Trade-offs)](#6-pertimbangan-teknik-engineering-trade-offs)
-- [7. Evaluasi & Validasi Kinerja](#7-evaluasi--validasi-kinerja)
-- [8. Refleksi Rekayasa & Evaluasi Teknis](#8-refleksi-rekayasa--evaluasi-teknis)
-- [9. Fitur API & Panduan Instalasi Lokal](#9-fitur-api--panduan-instalasi-lokal)
-- [10. Struktur Direktori Proyek](#10-struktur-direktori-proyek)
-- [11. Penulis & Rincian Kontribusi](#11-penulis--rincian-kontribusi)
-- [12. Tech Stack & Rencana Pengembangan Masa Depan](#12-tech-stack--rencana-pengembangan-masa-depan)
+- [1. Hero Header & Quick Access](#section-1)
+- [3. Ringkasan Eksekutif & Metrik Kinerja](#section-3)
+- [4. Spesifikasi Database & Relasi Entitas](#section-4)
+- [5. Arsitektur & Alur Kerja Sistem](#section-5)
+- [6. Pertimbangan Teknik (Engineering Trade-offs)](#section-6)
+- [7. Evaluasi & Validasi Kinerja](#section-7)
+- [8. Refleksi Rekayasa & Evaluasi Teknis](#section-8)
+- [9. Fitur API & Panduan Instalasi Lokal](#section-9)
+- [10. Struktur Direktori Proyek](#section-10)
+- [11. Penulis & Rincian Kontribusi](#section-11)
+- [12. Tech Stack & Rencana Pengembangan Masa Depan](#section-12)
 
-## 📊 3. Ringkasan Eksekutif & Metrik Kinerja
+## <a id="section-3"></a>📊 3. Ringkasan Eksekutif & Metrik Kinerja
 
 Proyek ini dibangun untuk menjawab tantangan pemrosesan saldo secara *real-time* di mana konsistensi data adalah prioritas utama. Menggunakan arsitektur RESTful API yang ditenagai oleh Express.js dan Prisma ORM, sistem ini mengandalkan eksekusi *atomic transaction* untuk memastikan setiap debit dan kredit tersinkronisasi tanpa celah.
 
@@ -41,14 +41,14 @@ Proyek ini dibangun untuk menjawab tantangan pemrosesan saldo secara *real-time*
 | **Password Hashing** | `bcrypt` (10 Salt Rounds) |
 | **BigInt Support** | Native JavaScript BigInt serialization terkonfigurasi |
 
-## 🗄️ 4. Spesifikasi Database & Relasi Entitas
+## <a id="section-4"></a>🗄️ 4. Spesifikasi Database & Relasi Entitas
 
 Sistem ini didesain secara efisien menggunakan dua entitas inti untuk menekan *overhead* relasi yang tidak perlu:
 
 1. **`User` (Entity)**: Menyimpan data pengguna, kredensial PIN yang di-hash dengan bcrypt, serta menyimpan agregasi total `balance` (tipe data *BigInt* untuk menghindari *floating point precision loss*). Field `phone_number` dilindungi oleh *Unique Constraint*.
 2. **`Transaction` (Entity/MutationLog)**: Mencatat setiap pergerakan dana. Memiliki relasi *Foreign Key* ke entitas `User`. Mendukung tipe transaksi `CREDIT` dan `DEBIT`. Menyimpan rekam jejak `balance_before` dan `balance_after` untuk audit internal.
 
-## ⚙️ 5. Arsitektur & Alur Kerja Sistem
+## <a id="section-5"></a>⚙️ 5. Arsitektur & Alur Kerja Sistem
 
 Alur dari *request* hingga *response* dieksekusi secara ketat terlapisi:
 1. **Client Request** ➔ Tiba di endpoint Express.js.
@@ -58,7 +58,7 @@ Alur dari *request* hingga *response* dieksekusi secara ketat terlapisi:
 5. **Database (PostgreSQL)** ➔ Menjalankan *row-level lock/update* secara atomik.
 6. **Response** ➔ Format respons standar JSON dengan status `SUCCESS`.
 
-## ⚖️ 6. Pertimbangan Teknik (Engineering Trade-offs)
+## <a id="section-6"></a>⚖️ 6. Pertimbangan Teknik (Engineering Trade-offs)
 
 | Aspek | Solusi Terpilih | Alternatif | Alasan Pemilihan |
 | :--- | :--- | :--- | :--- |
@@ -69,19 +69,19 @@ Alur dari *request* hingga *response* dieksekusi secara ketat terlapisi:
 > [!TIP]
 > **Analisis *Race Condition*:** Dengan menggunakan metode *atomic transaction*, saat dua *request transfer* datang bersamaan untuk pengguna yang sama, sistem akan menyelesaikan satu siklus mutasi debit/kredit sebelum mengizinkan siklus berikutnya, mencegah saldo menjadi minus (*double spending*).
 
-## 🧪 7. Evaluasi & Validasi Kinerja
+## <a id="section-7"></a>🧪 7. Evaluasi & Validasi Kinerja
 
 Sistem ini divalidasi menggunakan gabungan pengujian manual interaktif (Postman) dan otomatis (Jest/Supertest).
 - **Integration Testing:** Skrip `tests/flow.test.js` memvalidasi *Happy Path* beruntun secara otomatis: Registrasi ➔ Login ➔ Top Up ➔ Payment ➔ Registrasi Target ➔ Transfer ➔ Update Profil ➔ Cek Riwayat.
 - **Manual Edge Case:** File `postman_collection.json` secara mendalam menyertakan pengujian skenario kegagalan: Token kedaluwarsa, PIN salah, saldo tidak cukup saat transaksi, dan duplikasi pendaftaran nomor telepon.
 
-## 💡 8. Refleksi Rekayasa & Evaluasi Teknis
+## <a id="section-8"></a>💡 8. Refleksi Rekayasa & Evaluasi Teknis
 
 Pada iterasi ini, tantangan terbesar adalah menjaga agar arsitektur tetap ramping (*no overengineering*) namun tetap **tangguh secara finansial**. Memasukkan RabbitMQ atau Kafka pada tahap awal *Proof of Concept* akan terlalu berlebihan. Solusi pragmatis yang kami ambil adalah mengandalkan sepenuhnya fitur transaksi *database-level* dari PostgreSQL.
 
 *Mitigasi Masa Depan:* Apabila *throughput* mencapai tingkat *enterprise* (puluhan ribu transaksi per detik), *row-locking* di PostgreSQL dapat menjadi *bottleneck* performa. Rencana mitigasinya tertuang di bagian Roadmap.
 
-## 🚀 9. Fitur API & Panduan Instalasi Lokal
+## <a id="section-9"></a>🚀 9. Fitur API & Panduan Instalasi Lokal
 
 ### 📍 Endpoint Inti
 - `POST /register` & `POST /login` (Sistem Otentikasi)
@@ -119,7 +119,7 @@ Pada iterasi ini, tantangan terbesar adalah menjaga agar arsitektur tetap rampin
    npm test       # Menjalankan suite pengujian end-to-end Jest
    ```
 
-## 📂 10. Struktur Direktori Proyek
+## <a id="section-10"></a>📂 10. Struktur Direktori Proyek
 
 Representasi struktur *Layered Architecture* yang kami terapkan:
 
@@ -142,13 +142,13 @@ Representasi struktur *Layered Architecture* yang kami terapkan:
 ┗ 📜 .gitignore         # Eksklusi repository version control
 ```
 
-## 👥 11. Penulis & Rincian Kontribusi
+## <a id="section-11"></a>👥 11. Penulis & Rincian Kontribusi
 
 - **Ari Hermawan**
   - **Peran:** Lead Backend Engineer / System Architect
   - **Kontribusi:** Merancang skema database (PostgreSQL + Prisma), mengembangkan algoritma transfer atomik lintas batas, mengonfigurasi pengujian end-to-end, dan menyusun standar dokumentasi integrasi API.
 
-## 🗺️ 12. Tech Stack & Rencana Pengembangan Masa Depan (Roadmap)
+## <a id="section-12"></a>🗺️ 12. Tech Stack & Rencana Pengembangan Masa Depan (Roadmap)
 
 **Tech Stack Inti:** `Node.js (LTS)`, `Express.js`, `PostgreSQL`, `Prisma (v5.22.0)`, `Jest`, `Supertest`, `Bcrypt`, `JSONWebToken`.
 
